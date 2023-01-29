@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:c_masteruser/controllers/user_controller.dart';
 import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/pages/homepage.dart';
@@ -63,9 +65,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         vSpace(30),
-                        InputEmail(context, txtTheme),
+                        inputEmail(context, txtTheme),
                         vSpace(20),
-                        InputPassword(context, txtTheme),
+                        inputPassword(context, txtTheme),
                         vSpace(20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -100,6 +102,8 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                 } else {
                                   // TO LOGIN
+                                  // Use !mounted to check if widget fully mounted or no , otherwise warning popup
+                                  if (!mounted) return;
                                   switchPage(
                                       context, HomePage(user: userLogin));
                                 }
@@ -173,12 +177,14 @@ class _LoginPageState extends State<LoginPage> {
           await userController.login(email: email, password: password);
       return userLogin;
     }
+    return null;
   }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return "Password cannot be empty!";
     }
+    return null;
   }
 
   String? validateEmail(String? value) {
@@ -190,9 +196,10 @@ class _LoginPageState extends State<LoginPage> {
         .hasMatch(value)) {
       return "Invalid Email address format!";
     }
+    return null;
   }
 
-  FormBuilderTextField InputEmail(BuildContext context, TextTheme txtTheme) {
+  FormBuilderTextField inputEmail(BuildContext context, TextTheme txtTheme) {
     return FormBuilderTextField(
       name: "email",
       validator: ((value) => (validateEmail(value))),
@@ -223,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  FormBuilderTextField InputPassword(BuildContext context, TextTheme txtTheme) {
+  FormBuilderTextField inputPassword(BuildContext context, TextTheme txtTheme) {
     return FormBuilderTextField(
       name: "password",
       validator: ((value) => (validatePassword(value))),
