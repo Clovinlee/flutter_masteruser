@@ -3,6 +3,7 @@ import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/pages/homepage.dart';
 import 'package:c_masteruser/pages/registerpage.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';
+import 'package:c_masteruser/utils/page_change.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -99,11 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                 } else {
                                   // TO LOGIN
-                                  Route homeRoute = MaterialPageRoute(
-                                      builder: ((context) =>
-                                          HomePage(user: userLogin)));
-                                  Navigator.of(context)
-                                      .pushReplacement(homeRoute);
+                                  switchPage(
+                                      context, HomePage(user: userLogin));
                                 }
                               },
                               gradient: Gradients.buildGradient(
@@ -146,10 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                             Text("Don't have an account? "),
                             GestureDetector(
                               onTap: () {
-                                Route registerRoute = MaterialPageRoute(
-                                    builder: ((context) => RegisterPage()));
-                                Navigator.of(context)
-                                    .pushReplacement(registerRoute);
+                                switchPage(context, RegisterPage());
                               },
                               child: Text(
                                 "Register Now!",

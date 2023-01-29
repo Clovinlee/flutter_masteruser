@@ -1,5 +1,6 @@
 import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/pages/loginpage.dart';
+import 'package:c_masteruser/utils/page_change.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,9 +23,7 @@ class HomePage extends StatelessWidget {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  Route loginRoute =
-                      MaterialPageRoute(builder: ((context) => LoginPage()));
-                  Navigator.of(context).pushReplacement(loginRoute);
+                  switchPage(context, LoginPage());
                 },
                 child: Text("Logout (in a nut shell)"))
           ],
