@@ -6,6 +6,7 @@ ThemeData lightTheme = ThemeData(
   fontFamily: "Lexend",
   primaryColor: ThemeManager.primaryColor,
   secondaryHeaderColor: ThemeManager.secondaryColor,
+  // canvasColor: Color.fromARGB(255, 243, 222, 174),
   textTheme: TextTheme(
     // 2021 Style
     // displayLarge, displayMedium, displaySmall
