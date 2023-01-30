@@ -48,6 +48,8 @@ dependencies:
   # Api Request and interceptor
   dio: ^4.0.6
   dio_logging_interceptor: ^1.0.1
+  # Generate swatch color list
+  material_color_generator: ^1.1.0
 
 dev_dependencies:
   flutter_test:

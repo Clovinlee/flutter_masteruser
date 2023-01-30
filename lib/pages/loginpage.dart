@@ -3,7 +3,10 @@
 import 'package:c_masteruser/controllers/user_controller.dart';
 import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/pages/homepage.dart';
+import 'package:c_masteruser/pages/masterpage.dart';
+import 'package:c_masteruser/pages/profilepage.dart';
 import 'package:c_masteruser/pages/registerpage.dart';
+import 'package:c_masteruser/pages/wrapperpage.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';
 import 'package:c_masteruser/utils/page_change.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
@@ -105,7 +108,16 @@ class _LoginPageState extends State<LoginPage> {
                                   // Use !mounted to check if widget fully mounted or no , otherwise warning popup
                                   if (!mounted) return;
                                   switchPage(
-                                      context, HomePage(user: userLogin));
+                                    context,
+                                    WrapperPage(
+                                      user: userLogin,
+                                      pageList: [
+                                        HomePage(user: userLogin),
+                                        ProfilePage(user: userLogin),
+                                        MasterPage(user: userLogin),
+                                      ],
+                                    ),
+                                  );
                                 }
                               },
                               gradient: Gradients.buildGradient(

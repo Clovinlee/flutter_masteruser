@@ -1,9 +1,11 @@
 import 'package:c_masteruser/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:material_color_generator/material_color_generator.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   fontFamily: "Lexend",
+  primarySwatch: generateMaterialColor(color: ThemeManager.primaryColor),
   primaryColor: ThemeManager.primaryColor,
   secondaryHeaderColor: ThemeManager.secondaryColor,
   // canvasColor: Color.fromARGB(255, 243, 222, 174),
