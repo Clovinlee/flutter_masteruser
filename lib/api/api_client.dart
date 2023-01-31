@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_logging_interceptor/dio_logging_interceptor.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,6 +10,8 @@ class ApiClient {
 
   static Dio getDioClient() {
     if (ApiClient._dioClient == null) {
+      // HTTP(s) certificate error fix
+
       // Dio Base Option
       BaseOptions option = BaseOptions(
           baseUrl: dotenv.env["API_URL"]!,
@@ -26,6 +31,13 @@ class ApiClient {
         level: Level.body,
         compact: false,
       ));
+
+      (_dioClient?.httpClientAdapter as DefaultHttpClientAdapter)
+          .onHttpClientCreate = (HttpClient client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        return client;
+      };
     }
     return _dioClient!;
   }
