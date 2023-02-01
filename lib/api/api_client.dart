@@ -10,8 +10,6 @@ class ApiClient {
 
   static Dio getDioClient() {
     if (ApiClient._dioClient == null) {
-      // HTTP(s) certificate error fix
-
       // Dio Base Option
       BaseOptions option = BaseOptions(
           baseUrl: dotenv.env["API_URL"]!,
@@ -31,7 +29,7 @@ class ApiClient {
         level: Level.body,
         compact: false,
       ));
-
+      // HTTP(s) certificate error fix
       (_dioClient?.httpClientAdapter as DefaultHttpClientAdapter)
           .onHttpClientCreate = (HttpClient client) {
         client.badCertificateCallback =

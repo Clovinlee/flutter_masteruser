@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, avoid_print
 
 import 'package:c_masteruser/controllers/user_controller.dart';
 import 'package:c_masteruser/models/user.dart';
@@ -111,11 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                                     context,
                                     WrapperPage(
                                       user: userLogin,
-                                      pageList: [
-                                        HomePage(user: userLogin),
-                                        ProfilePage(user: userLogin),
-                                        MasterPage(user: userLogin),
-                                      ],
                                     ),
                                   );
                                 }
@@ -350,7 +345,7 @@ class _UpperShapeState extends State<UpperShape> {
   }
 }
 
-class DecorationBox extends StatefulWidget {
+class DecorationBox extends StatelessWidget {
   const DecorationBox({
     Key? key,
     required this.width,
@@ -369,14 +364,9 @@ class DecorationBox extends StatefulWidget {
   final double borderRadius;
 
   @override
-  State<DecorationBox> createState() => _DecorationBoxState();
-}
-
-class _DecorationBoxState extends State<DecorationBox> {
-  @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-      angle: widget.rotation,
+      angle: rotation,
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
@@ -388,17 +378,17 @@ class _DecorationBoxState extends State<DecorationBox> {
             )
           ],
           gradient: LinearGradient(
-            colors: widget.colorGradient,
+            colors: colorGradient,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            stops: widget.stopGradient,
+            stops: stopGradient,
           ),
           borderRadius: BorderRadius.circular(
-            widget.borderRadius,
+            borderRadius,
           ),
         ),
-        height: widget.height,
-        width: widget.width,
+        height: height,
+        width: width,
       ),
     );
   }

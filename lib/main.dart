@@ -1,11 +1,18 @@
+import 'package:c_masteruser/wrapper_main.dart';
+import 'package:encrypt/encrypt.dart';
+
 import 'package:c_masteruser/pages/loginpage.dart';
 import 'package:c_masteruser/themes/theme_constant.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';
+import 'package:encrypt/encrypt.dart' as enc;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
+  // SQLITE DATABASE NOT USED
+  // AppDatabase.initDatabase;
+  //
   runApp(const MyApp());
 }
 
@@ -45,6 +52,6 @@ class _MyAppState extends State<MyApp> {
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: _themeManager.themeMode,
-        home: LoginPage());
+        home: WrapperMain());
   }
 }

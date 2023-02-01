@@ -1,19 +1,18 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/pages/homepage.dart';
-import 'package:c_masteruser/pages/loginpage.dart';
 import 'package:c_masteruser/pages/masterpage.dart';
 import 'package:c_masteruser/pages/profilepage.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';
-import 'package:c_masteruser/utils/page_change.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
 
 class WrapperPage extends StatefulWidget {
-  WrapperPage({required this.user, required this.pageList, super.key});
+  WrapperPage({required this.user, super.key});
 
   final User user;
-  final List<Widget> pageList;
+  late List<Widget> pageList;
 
   @override
   State<WrapperPage> createState() => _WrapperPageState();
@@ -22,6 +21,16 @@ class WrapperPage extends StatefulWidget {
 }
 
 class _WrapperPageState extends State<WrapperPage> {
+  @override
+  void initState() {
+    widget.pageList = [
+      HomePage(user: widget.user),
+      ProfilePage(user: widget.user),
+      MasterPage(user: widget.user),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextTheme txtTheme = Theme.of(context).textTheme;
