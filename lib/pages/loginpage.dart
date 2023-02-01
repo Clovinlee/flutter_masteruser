@@ -2,9 +2,6 @@
 
 import 'package:c_masteruser/controllers/user_controller.dart';
 import 'package:c_masteruser/models/user.dart';
-import 'package:c_masteruser/pages/homepage.dart';
-import 'package:c_masteruser/pages/masterpage.dart';
-import 'package:c_masteruser/pages/profilepage.dart';
 import 'package:c_masteruser/pages/registerpage.dart';
 import 'package:c_masteruser/pages/wrapperpage.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';

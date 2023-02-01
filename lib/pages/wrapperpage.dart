@@ -20,11 +20,16 @@ class WrapperPage extends StatefulWidget {
   int idxPage = 0;
 }
 
+GlobalKey btmBarKey = GlobalKey(debugLabel: 'bottomNavBar');
+
 class _WrapperPageState extends State<WrapperPage> {
   @override
   void initState() {
     widget.pageList = [
-      HomePage(user: widget.user),
+      HomePage(
+        user: widget.user,
+        btmBarKey: btmBarKey,
+      ),
       ProfilePage(user: widget.user),
       MasterPage(user: widget.user),
     ];
@@ -56,6 +61,7 @@ class _WrapperPageState extends State<WrapperPage> {
         ),
         drawer: HomeDrawer(widget: widget, txtTheme: txtTheme),
         bottomNavigationBar: BottomNavigationBar(
+          key: btmBarKey,
           currentIndex: widget.idxPage,
           onTap: (int idx) {
             setState(() {

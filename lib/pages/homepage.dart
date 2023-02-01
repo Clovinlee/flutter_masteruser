@@ -1,15 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/pages/loginpage.dart';
+import 'package:c_masteruser/pages/wrapperpage.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';
 import 'package:c_masteruser/utils/page_change.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({required this.user, super.key});
+  const HomePage({required this.user, super.key, required this.btmBarKey});
 
   final User user;
+  final GlobalKey btmBarKey;
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -64,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                               Alignment.centerRight,
                               [Colors.red.shade700, Colors.red.shade400]),
                           callback: () {
-                            switchPage(context, LoginPage());
+                            logout(context);
                           },
                           child: Text(
                             "Logout",
@@ -81,7 +87,9 @@ class _HomePageState extends State<HomePage> {
                               Alignment.centerRight,
                               [Colors.orange.shade600, Colors.orange.shade400]),
                           callback: () {
-                            switchPage(context, LoginPage());
+                            final BottomNavigationBar btmBar =
+                                btmBarKey.currentWidget as BottomNavigationBar;
+                            btmBar.onTap!(1);
                           },
                           child: Text(
                             "My Profile",
@@ -126,4 +134,10 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+void logout(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  switchPage(context, LoginPage());
 }

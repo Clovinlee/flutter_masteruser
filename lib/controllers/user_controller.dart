@@ -31,9 +31,7 @@ class UserController {
     if (email == null || password == null) {
       return null;
     }
-    print(password);
     password = decrypt(password);
-    print(password);
     userReturn = await login(email: email, password: password);
     return userReturn;
   }

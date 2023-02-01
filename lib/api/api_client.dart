@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
@@ -25,10 +27,10 @@ class ApiClient {
           }));
       //
       _dioClient = Dio(option);
-      _dioClient!.interceptors.add(DioLoggingInterceptor(
-        level: Level.body,
-        compact: false,
-      ));
+      // _dioClient!.interceptors.add(DioLoggingInterceptor(
+      //   level: Level.body,
+      //   compact: false,
+      // ));
       // HTTP(s) certificate error fix
       (_dioClient?.httpClientAdapter as DefaultHttpClientAdapter)
           .onHttpClientCreate = (HttpClient client) {
