@@ -23,7 +23,7 @@ class _WrapperMainState extends State<WrapperMain> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1, milliseconds: 500));
       getRememberMe(context);
     });
   }
