@@ -1,16 +1,6 @@
 # c_masteruser
 
-A new Flutter project.
+Playground flutter project for flutter. Consist of user login, API, experimental widget testing, and package.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ENV
+Env and Dummy user aren't available for public use
