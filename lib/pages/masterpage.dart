@@ -2,8 +2,11 @@
 
 import 'package:c_masteruser/controllers/user_controller.dart';
 import 'package:c_masteruser/models/user.dart';
+import 'package:c_masteruser/pages/user/addpage,.dart';
+import 'package:c_masteruser/utils/page_change.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
 import 'package:flutter/material.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
 
 class MasterPage extends StatefulWidget {
   MasterPage({required this.user, super.key});
@@ -12,6 +15,8 @@ class MasterPage extends StatefulWidget {
 
   @override
   State<MasterPage> createState() => _MasterPageState();
+
+  late Future<List<User>?> listUsers;
 }
 
 UserController userController = UserController();
@@ -19,6 +24,7 @@ UserController userController = UserController();
 class _MasterPageState extends State<MasterPage> {
   @override
   void initState() {
+    widget.listUsers = userController.fetchUsers();
     super.initState();
   }
 
@@ -41,9 +47,39 @@ class _MasterPageState extends State<MasterPage> {
               "List of Users",
               style: txtTheme.bodySmall,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GradientButton(
+                  gradient: Gradients.buildGradient(
+                      Alignment.centerLeft,
+                      Alignment.centerRight,
+                      [Colors.green.shade400, Colors.green.shade500]),
+                  callback: () {
+                    stackNextPage(context, AddUserPage());
+                  },
+                  increaseWidthBy: 35,
+                  increaseHeightBy: 5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        size: 26,
+                      ),
+                      hSpace(6),
+                      Text(
+                        "Add User",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             vSpace(10),
             FutureBuilder(
-                future: userController.fetchUsers(),
+                future: widget.listUsers,
                 builder: ((context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done &&
                       snapshot.hasData &&
@@ -94,7 +130,9 @@ class UserDataTableSource extends DataTableSource {
             Text(u.name),
             IconButton(
               splashRadius: 25,
-              onPressed: () {},
+              onPressed: () {
+                //TODO: EDIT
+              },
               icon: Icon(Icons.edit),
             )
           ],
