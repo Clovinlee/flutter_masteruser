@@ -10,6 +10,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserController {
   UserRepository userRepo = UserRepository();
 
+  Future<UserModel?> addUser(
+      String email, String name, String? description, String password,
+      {int type = 1}) async {
+    Response r;
+    r = await userRepo.addUser(email, name, description, password, type: 1);
+    Map<String, dynamic> data = jsonDecode(jsonEncode(r.data));
+    UserModel umodel = UserModel.fromJson(data);
+    return umodel;
+  }
+
   Future<List<User>?> fetchUsers(
       {String id = "", String email = "", String password = ""}) async {
     List<User>? listUsers;

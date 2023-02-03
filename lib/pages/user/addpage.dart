@@ -1,10 +1,13 @@
-// ignore_for_file: file_names, must_be_immutable
+// ignore_for_file: file_names, must_be_immutable, use_build_context_synchronously
 
 import 'package:c_masteruser/controllers/user_controller.dart';
+import 'package:c_masteruser/models/user.dart';
 import 'package:c_masteruser/themes/theme_manager.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
+import 'package:c_masteruser/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 
 class AddUserPage extends StatefulWidget {
@@ -14,14 +17,21 @@ class AddUserPage extends StatefulWidget {
   State<AddUserPage> createState() => _AddUserPageState();
 
   bool passwordVisible = false;
-  bool loadLogin = false;
   String? _passwordError;
+  bool isLoading = false;
 }
 
 final formKey = GlobalKey<FormBuilderState>();
 UserController userController = UserController();
+FToast fToast = FToast();
 
 class _AddUserPageState extends State<AddUserPage> {
+  @override
+  void initState() {
+    fToast.init(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextTheme txtTheme = Theme.of(context).textTheme;
@@ -76,13 +86,15 @@ class _AddUserPageState extends State<AddUserPage> {
                     formInput(
                         context,
                         txtTheme,
-                        (val) => val ?? "Name cannot be empty!",
+                        (val) => val == null || val.isEmpty
+                            ? "Name cannot be empty!"
+                            : null,
                         "name",
                         "Name",
                         Icons.person),
                     vSpace(20),
-                    formInput(
-                        context, txtTheme, null, "deskripsi", "Deskripsi", null,
+                    formInput(context, txtTheme, null, "description",
+                        "Description", null,
                         maxLineInput: 4,
                         labelBehavior: FloatingLabelBehavior.always),
                     vSpace(20),
@@ -93,24 +105,62 @@ class _AddUserPageState extends State<AddUserPage> {
                           Alignment.centerLeft,
                           Alignment.centerRight,
                           [Colors.green.shade400, Colors.green.shade500]),
-                      callback: () {
-                        //TODO: ADD USER
+                      callback: () async {
+                        if (widget.isLoading) {
+                          return;
+                        }
+
+                        if (formKey.currentState!.validate()) {
+                          setState(() {
+                            widget.isLoading = true;
+                          });
+                          UserModel? umodel = await addUser();
+
+                          setState(() {
+                            widget.isLoading = false;
+                          });
+
+                          if (umodel == null) {
+                            errorToast(txtTheme,
+                                "Add User Error, please contact admin!");
+                          } else {
+                            List<User>? userReturn = umodel.data;
+                            if (userReturn == null) {
+                              errorToast(txtTheme, umodel.message.toString());
+
+                              // ignore: avoid_print
+                              print(umodel.message);
+                            } else {
+                              User u = userReturn.first;
+                              successToast(
+                                  txtTheme, "User ${u.name} has been aded");
+                              // GO BACK TO PREVIOUS PAGE
+                              Navigator.pop(context);
+                            }
+                          }
+                        }
                       },
                       increaseWidthBy: double.infinity,
                       increaseHeightBy: 12,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            size: 26,
-                          ),
-                          hSpace(6),
-                          Text(
-                            "Add User",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
+                        children: widget.isLoading == true
+                            ? [
+                                CircularProgressIndicator(
+                                  color: ThemeManager.whiteColor,
+                                )
+                              ]
+                            : [
+                                Icon(
+                                  Icons.add,
+                                  size: 26,
+                                ),
+                                hSpace(6),
+                                Text(
+                                  "Add User",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
                       ),
                     ),
                   ],
@@ -175,6 +225,20 @@ class _AddUserPageState extends State<AddUserPage> {
       ),
     );
   }
+}
+
+Future<UserModel?> addUser() async {
+  final String email = formKey.currentState?.fields["email"]?.value;
+  final String name = formKey.currentState?.fields["name"]?.value;
+  final String description =
+      formKey.currentState?.fields["description"]?.value ?? "";
+  final String password = formKey.currentState?.fields["password"]?.value;
+  const int type = 1;
+  UserModel? umodel;
+  umodel = await userController.addUser(email, name, description, password,
+      type: type);
+  // Returned user model instead of user because user model might return message of existing email warning.
+  return umodel;
 }
 
 FormBuilderTextField formInput(

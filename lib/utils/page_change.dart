@@ -5,6 +5,9 @@ void switchPage(BuildContext context, Widget page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
-void stackNextPage(BuildContext context, Widget page) {
+void stackNextPage(
+  BuildContext context,
+  Widget page,
+) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }

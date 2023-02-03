@@ -54,8 +54,10 @@ dependencies:
   sqflite: ^2.2.4+1
   # Shared preferences to save cache alike
   shared_preferences: ^2.0.17
-  # Encrypter and decrypter
+  # Encrypter and decrypter for remember me
   encrypt: ^5.0.1
+  # Toast to display error
+  fluttertoast: ^8.1.2
 
 dev_dependencies:
   flutter_test:

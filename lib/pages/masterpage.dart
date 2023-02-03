@@ -2,7 +2,7 @@
 
 import 'package:c_masteruser/controllers/user_controller.dart';
 import 'package:c_masteruser/models/user.dart';
-import 'package:c_masteruser/pages/user/addpage,.dart';
+import 'package:c_masteruser/pages/user/addpage.dart';
 import 'package:c_masteruser/utils/page_change.dart';
 import 'package:c_masteruser/utils/sizedbox_spacer.dart';
 import 'package:flutter/material.dart';

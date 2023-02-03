@@ -77,39 +77,42 @@ class _LoginPageState extends State<LoginPage> {
                                 if (widget.loadLogin) {
                                   return;
                                 }
-                                setState(() {
-                                  widget.loadLogin = !widget.loadLogin;
-                                });
 
-                                User? userLogin = await login();
-
-                                setState(() {
-                                  widget.loadLogin = !widget.loadLogin;
-                                });
-
-                                if (userLogin == null) {
-                                  // INVALID ACCOUNT
-
-                                  // formKey.currentState?.fields["password"]
-                                  //     ?.reset();
+                                if (formKey.currentState!.validate()) {
                                   setState(() {
-                                    formKey.currentState?.fields["password"]
-                                        ?.setValue("");
-                                    formKey.currentState?.fields["password"]
-                                        ?.reset();
-                                    widget._passwordError =
-                                        "Invalid account / password";
+                                    widget.loadLogin = !widget.loadLogin;
                                   });
-                                } else {
-                                  // TO LOGIN
-                                  // Use !mounted to check if widget fully mounted or no , otherwise warning popup
-                                  if (!mounted) return;
-                                  switchPage(
-                                    context,
-                                    WrapperPage(
-                                      user: userLogin,
-                                    ),
-                                  );
+
+                                  User? userLogin = await login();
+
+                                  setState(() {
+                                    widget.loadLogin = !widget.loadLogin;
+                                  });
+
+                                  if (userLogin == null) {
+                                    // INVALID ACCOUNT
+
+                                    // formKey.currentState?.fields["password"]
+                                    //     ?.reset();
+                                    setState(() {
+                                      formKey.currentState?.fields["password"]
+                                          ?.setValue("");
+                                      formKey.currentState?.fields["password"]
+                                          ?.reset();
+                                      widget._passwordError =
+                                          "Invalid account / password";
+                                    });
+                                  } else {
+                                    // TO LOGIN
+                                    // Use !mounted to check if widget fully mounted or no , otherwise warning popup
+                                    if (!mounted) return;
+                                    switchPage(
+                                      context,
+                                      WrapperPage(
+                                        user: userLogin,
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                               gradient: Gradients.buildGradient(
@@ -173,15 +176,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<User?> login() async {
-    if (formKey.currentState!.validate()) {
-      final String email = formKey.currentState?.fields["email"]?.value;
-      final String password = formKey.currentState?.fields["password"]?.value;
+    final String email = formKey.currentState?.fields["email"]?.value;
+    final String password = formKey.currentState?.fields["password"]?.value;
 
-      User? userLogin =
-          await userController.login(email: email, password: password);
-      return userLogin;
-    }
-    return null;
+    User? userLogin =
+        await userController.login(email: email, password: password);
+    return userLogin;
   }
 
   String? validatePassword(String? value) {
