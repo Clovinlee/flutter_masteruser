@@ -39,4 +39,20 @@ class UserRepository {
     r = await dio.get(endpoint, queryParameters: qParam);
     return r;
   }
+
+  Future<Response> register({String id = "", String email = "", String password = "", String name = "", String notelp = ""}) async {
+    Response r;
+    Dio dio = ApiClient.getDioClient();
+    Map<String, dynamic> qParam = {
+      "id": id,
+      "email": email,
+      "password": password,
+      "name": name,
+      "notelp": notelp,
+      "type": 1,
+    };
+
+    r = await dio.post(endpoint_adduser, queryParameters: qParam);
+    return r;
+  }
 }
