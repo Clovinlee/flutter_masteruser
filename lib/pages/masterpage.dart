@@ -57,7 +57,7 @@ class _MasterPageState extends State<MasterPage> {
                       [Colors.green.shade400, Colors.green.shade500]),
                   callback: () {
                     stackNextPage(context, AddUserPage(), callback: (obj) {
-                      if (obj["success"] == true) {
+                      if (obj != null && obj["success"] == true) {
                         setState(() {
                           widget.listUsers = userController.fetchUsers();
                         });
