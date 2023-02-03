@@ -135,7 +135,7 @@ class _AddUserPageState extends State<AddUserPage> {
                               successToast(
                                   txtTheme, "User ${u.name} has been aded");
                               // GO BACK TO PREVIOUS PAGE
-                              Navigator.pop(context);
+                              Navigator.pop(context, {"success": true});
                             }
                           }
                         }

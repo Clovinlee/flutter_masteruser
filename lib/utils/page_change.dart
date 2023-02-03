@@ -5,9 +5,12 @@ void switchPage(BuildContext context, Widget page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
-void stackNextPage(
-  BuildContext context,
-  Widget page,
-) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+_defaultFunction(dynamic) {
+  return null;
+}
+
+void stackNextPage(BuildContext context, Widget page,
+    {Function(dynamic) callback = _defaultFunction}) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => page))
+      .then(callback);
 }

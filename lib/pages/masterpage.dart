@@ -33,7 +33,7 @@ class _MasterPageState extends State<MasterPage> {
     TextTheme txtTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,7 +56,13 @@ class _MasterPageState extends State<MasterPage> {
                       Alignment.centerRight,
                       [Colors.green.shade400, Colors.green.shade500]),
                   callback: () {
-                    stackNextPage(context, AddUserPage());
+                    stackNextPage(context, AddUserPage(), callback: (obj) {
+                      if (obj["success"] == true) {
+                        setState(() {
+                          widget.listUsers = userController.fetchUsers();
+                        });
+                      }
+                    });
                   },
                   increaseWidthBy: 35,
                   increaseHeightBy: 5,
