@@ -40,7 +40,12 @@ class UserRepository {
     return r;
   }
 
-  Future<Response> register({String id = "", String email = "", String password = "", String name = "", String notelp = ""}) async {
+  Future<Response> register(
+      {String id = "",
+      String email = "",
+      String password = "",
+      String name = "",
+      String notelp = ""}) async {
     Response r;
     Dio dio = ApiClient.getDioClient();
     Map<String, dynamic> qParam = {
